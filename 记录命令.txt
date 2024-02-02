@@ -1,0 +1,47 @@
+--as_one_file - generate separate css and js files instead of embedding everything in html
+--disable_confirmation - run without asking for confirmation
+
+批量
+mokuro --disable_confirmation --parent_dir "？/" --as_one_file False
+单文件
+mokuro --disable_confirmation "" --as_one_file False
+
+.venv\Scripts\activate
+
+mokuro --disable_confirmation --parent_dir "F:\qBit\Website\yuri-hime\title\123/" --as_one_file False
+
+
+
+
+
+$> mokuro "my-manga-01" --mobile True --disable_confirmation True
+'// _ocr, my-manga-01.html, my-manga-01.mobile.html'
+
+$> mokuro "my-manga-01" --mobile True --disable_confirmation True --as_one_file False
+'// _ocr, my-manga-01.html, script.js, styles.css, panzoom.min.js'
+'// my-manga-01.mobile.html, script.mobile.js, styles.mobile.css'
+
+
+.venv/Scripts/activate 
+
+panzoom.min.js
+去掉了方向键，用来翻页
+if(e.keyCode===38){y=1}else if(e.keyCode===40){y=-1}else if(e.keyCode===37){x=1}else if(e.keyCode===39){x=-1}else if(e.keyCode===189||e.keyCode===109){z=1}
+↓
+if(e.keyCode===189||e.keyCode===109){z=1}
+
+
+overlay_generator.py
+加入了 doc.text('\n') 让每一页都换行
+                with tag('div', id='pagesContainer'):
+                    for i, page_html in enumerate(page_htmls):
+                        with tag('div', id=f'page{i}', klass='page'):
+                            doc.asis(page_html)
+                        doc.text('\n')
+                    with tag('a', id='leftAPage', href='#'):
+                        pass
+
+                    with tag('a', id='rightAPage', href='#'):
+                        pass
+
+
