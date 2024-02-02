@@ -13,6 +13,7 @@ from mokuro.env import ASSETS_PATH
 from mokuro.manga_page_ocr import MangaPageOcr
 from mokuro.utils import dump_json, load_json
 
+HTML_PATH = Path(__file__).parent / 'index.html' # 单个漫画的主页
 SCRIPT_PATH = Path(__file__).parent / 'script.js'
 STYLES_PATH = Path(__file__).parent / 'styles.css'
 PANZOOM_PATH = ASSETS_PATH / 'panzoom.min.js'
@@ -69,9 +70,10 @@ class OverlayGenerator:
         results_dir.mkdir(parents=True, exist_ok=True)
 
         if not as_one_file:
-            shutil.copy(SCRIPT_PATH, out_dir / 'script.js')
-            shutil.copy(STYLES_PATH, out_dir / 'styles.css')
-            shutil.copy(PANZOOM_PATH, out_dir / 'panzoom.min.js')
+            # shutil.copy(SCRIPT_PATH, out_dir / '../script.js')
+            # shutil.copy(STYLES_PATH, out_dir / '../styles.css')
+            # shutil.copy(PANZOOM_PATH, out_dir / '../panzoom.min.js')
+            shutil.copy(HTML_PATH, out_dir / 'index.html') # js和css所有漫画共用，index则作为当前漫画的主页
 
         img_paths = [p for p in path.glob('**/*') if p.is_file() and p.suffix.lower() in ('.jpg', '.jpeg', '.png', '.webp', '.avif')]
         img_paths = natsorted(img_paths)
@@ -119,7 +121,7 @@ class OverlayGenerator:
                     with tag('style'):
                         doc.asis(STYLES_PATH.read_text())
                 else:
-                    with tag('link', rel='stylesheet', href='styles.css'):
+                    with tag('link', rel='stylesheet', href='../styles.css'):
                         pass
 
             with tag('body'):
@@ -144,7 +146,7 @@ class OverlayGenerator:
                     for i, page_html in enumerate(page_htmls):
                         with tag('div', id=f'page{i}', klass='page'):
                             doc.asis(page_html)
-
+                        doc.text('\n') # html中每页都换行，方便对比查找哪一页有错误
                     with tag('a', id='leftAPage', href='#'):
                         pass
 
@@ -158,10 +160,10 @@ class OverlayGenerator:
                     with tag('script'):
                         doc.asis(SCRIPT_PATH.read_text())
                 else:
-                    with tag('script', src='panzoom.min.js'):
+                    with tag('script', src='../panzoom.min.js'): # 读取上一层路径的js
                         pass
 
-                    with tag('script', src='script.js'):
+                    with tag('script', src='../script.js'): # 读取上一层路径的js
                         pass
 
                     if is_demo:

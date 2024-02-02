@@ -9,7 +9,7 @@ let storageKey = "mokuro_" + window.location.pathname;
 let defaultState = {
     page_idx: 0,
     page2_idx: -1,
-    hasCover: false,
+    hasCover: true, //首页单封面
     r2l: true,
     singlePageView: false,
     ctrlToPan: false,
@@ -123,6 +123,9 @@ function initTextBoxes() {
                     }
                 }
             }
+            // 单击标签之后会复制标签文本到剪切板
+            let textWithoutNewLines = this.innerText.replace(/(\r\n|\n|\r)/gm, "");
+            navigator.clipboard.writeText(textWithoutNewLines);
         });
     }
 // When clicking off of a .textBox, remove the hovered state.
@@ -137,6 +140,7 @@ function initTextBoxes() {
         }
     });
 }
+
 
 function updateProperties() {
     if (state.textBoxBorders) {
@@ -303,10 +307,12 @@ document.getElementById('rightAScreen').addEventListener('click', inputRight, fa
 document.addEventListener("keydown", function onEvent(e) {
     switch (e.key) {
         case "PageUp":
+        case "ArrowUp":
             prevPage();
             break;
 
         case "PageDown":
+        case "ArrowDown":
             nextPage();
             break;
 
