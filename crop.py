@@ -49,13 +49,13 @@ def batch_crop_images(folder_path, output_folder, size):
             print(f'{filename} has been processed and saved to {output_path}.')
 
 # 设置你的文件夹路径
-folder_path = r'F:\qBit\comic\Erufusan wa Yaserarenai v01-08 DL-Raw.Co\Erufusan wa Yaserarenai v04'  # 你的输入文件夹路径
-output_folder = r'F:\qBit\comic\Erufusan wa Yaserarenai v01-08 DL-Raw.Co\Erufusan wa Yaserarenai v04'  # 你的输出文件夹路径
+folder_path = r'C:\Users\Raindrop\Downloads\FireShot\新建文件夹'  # 你的输入文件夹路径
+output_folder = r'C:\Users\Raindrop\Downloads\FireShot\新建文件夹'  # 你的输出文件夹路径
 
 # 确保输出文件夹存在
 os.makedirs(output_folder, exist_ok=True)
 
 # 批量裁剪图片
-batch_crop_images(folder_path, output_folder, size=(3026, 2160))
-
+batch_crop_images(folder_path, output_folder, size=(2030, 1440))
+# batch_crop_images(folder_path, output_folder, size=(1015, 1440))
 # batch_crop_images(folder_path, output_folder, size=(1356,2038))

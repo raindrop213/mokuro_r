@@ -33,7 +33,7 @@ def check_image_orientation(image_path):
     with Image.open(image_path) as img:
         try:
             for orientation in ExifTags.TAGS.keys():
-                if ExifTags.TAGS[orientation]=='Orientation':
+                if ExifTags.TAGS[orientation] == 'Orientation':
                     break
             exif = dict(img._getexif().items())
 
@@ -57,17 +57,12 @@ def process_images_in_folder(folder_path):
     for filename in os.listdir(folder_path):
         # 构建完整的文件路径
         file_path = os.path.join(folder_path, filename)
-        # 检查文件是否为图片（这里以.jpg为例）
-        if filename.lower().endswith('.jpg'):
-            # print(f"正在处理图片：{file_path}")
+        # 检查文件是否为图片
+        if filename.lower().endswith(('.jpg', '.jpeg', '.png')):
             crop_image(file_path)
-            # 可选：调用 check_image_orientation 函数处理每张图片
-            # orientation = check_image_orientation(file_path)
-            # print(f"{filename} 的方向是：{orientation}")
         else:
             print(f"跳过非图片文件：{filename}")
 
 # 文件夹路径
-
-folder_path = r'H:\website\yuri-hime\title\[浅野いにお] おやすみプンプン\[浅野いにお] おやすみプンプン 第13巻'
+folder_path = r'C:\Users\Raindrop\Downloads\FireShot2'
 process_images_in_folder(folder_path)
