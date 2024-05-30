@@ -2,15 +2,23 @@
 --disable_confirmation - run without asking for confirmation
 
 批量
-mokuro --disable_confirmation --parent_dir "？/" --as_one_file False
+mokuro --disable_confirmation --parent_dir "?" --as_one_file False
 单文件
-mokuro --disable_confirmation "" --as_one_file False
+mokuro --disable_confirmation "?" --as_one_file False
 
+python环境
 .venv\Scripts\activate
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[深海紺] 春とみどり" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[志村貴子] 青い花" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[白浜鴎] とんがり帽子のアトリエ" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[宇仁田ゆみ] うさぎドロップ" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[福島聡] 星屑ニーナ" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[比村奇石] 月曜日のたわわ" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\_NON_A~1" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[森薫] 乙嫁語り" --as_one_file False
 
-mokuro --disable_confirmation --parent_dir "F:\qBit\Website\yuri-hime\title\123/" --as_one_file False
-
-
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\_(2858~1" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)村田蓮爾] Futurelog" --as_one_file False
 
 
 

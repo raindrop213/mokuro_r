@@ -97,8 +97,11 @@ def batch_process_images(folder_path, output_folder, size):
             print(f'Skipped non-image file: {filename}')
 
 # 设置你的文件夹路径
-folder_path = r'C:\Users\Raindrop\Downloads\FireShot\新建文件夹'  # 你的输入文件夹路径
-output_folder = r'C:\Users\Raindrop\Downloads\FireShot4'  # 你的输出文件夹路径
+name = "F:\qBit\manga\ひらやすみ\Hira Yasumi v01 DL"
+folder_path = name  # 你的输入文件夹路径
+output_folder = name+"2"  # 你的输出文件夹路径
 
 # 批量处理图片
-batch_process_images(folder_path, output_folder, size=(2030, 1440))
+# batch_process_images(folder_path, output_folder, size=(2030, 1440))
+# batch_process_images(folder_path, output_folder, size=(3034, 2160))
+batch_process_images(folder_path, output_folder, size=(1522, 1080))

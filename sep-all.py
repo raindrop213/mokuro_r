@@ -29,28 +29,6 @@ def crop_image(image_path):
 
             print(f"图片已裁剪：{image_path}")
 
-def check_image_orientation(image_path):
-    with Image.open(image_path) as img:
-        try:
-            for orientation in ExifTags.TAGS.keys():
-                if ExifTags.TAGS[orientation] == 'Orientation':
-                    break
-            exif = dict(img._getexif().items())
-
-            if exif[orientation] == 3:
-                rotated = "180 degrees"
-            elif exif[orientation] == 6:
-                rotated = "270 degrees (clockwise)"
-            elif exif[orientation] == 8:
-                rotated = "90 degrees (clockwise)"
-            else:
-                rotated = "not rotated"
-        except (AttributeError, KeyError, IndexError):
-            # cases: image don't have getexif
-            rotated = "no EXIF information"
-
-        return rotated
-
 # 定义处理文件夹内所有图片的函数
 def process_images_in_folder(folder_path):
     # 列出文件夹中所有文件
@@ -58,11 +36,11 @@ def process_images_in_folder(folder_path):
         # 构建完整的文件路径
         file_path = os.path.join(folder_path, filename)
         # 检查文件是否为图片
-        if filename.lower().endswith(('.jpg', '.jpeg', '.png')):
+        if filename.lower().endswith(('.jpg', '.jpeg', '.png', 'webp')):
             crop_image(file_path)
         else:
             print(f"跳过非图片文件：{filename}")
 
 # 文件夹路径
-folder_path = r'C:\Users\Raindrop\Downloads\FireShot2'
+folder_path = r'F:\qBit\comic\[志村貴子] 青い花\[志村貴子] 青い花 第05巻'
 process_images_in_folder(folder_path)

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Cropper</title>
+    <style>
+        #canvas {
+            border: 1px solid black;
+        }
+        #line {
+            position: absolute;
+            background-color: red;
+            width: 2px;
+            height: 600px;
+        }
+        #controls {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Cropper</h1>
+    <input type="file" id="fileInput" accept="image/*">
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <div id="line"></div>
+    <div id="controls">
+        <input type="range" id="scale" min="0" max="800" value="400">
+        <button id="saveButton">Save Cropped Images</button>
+    </div>
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const scale = document.getElementById('scale');
+        const line = document.getElementById('line');
+        const saveButton = document.getElementById('saveButton');
+        let image = new Image();
+        let imagePath = '';
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                imagePath = URL.createObjectURL(file);
+                loadImage(imagePath);
+            }
+        });
+
+        function loadImage(src) {
+            image.src = src;
+            image.onload = () => {
+                const aspectRatio = image.width / image.height;
+                const canvasWidth = 800;
+                const canvasHeight = canvasWidth / aspectRatio;
+                canvas.height = canvasHeight;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+                scale.max = canvas.width;
+                scale.value = canvas.width / 2;
+                updateLine(scale.value);
+            };
+        }
+
+        function updateLine(x) {
+            line.style.left = `${x}px`;
+        }
+
+        scale.addEventListener('input', (event) => {
+            updateLine(event.target.value);
+        });
+
+        saveButton.addEventListener('click', () => {
+            if (!imagePath) return;
+            const x = scale.value;
+            const aspectRatio = image.width / image.height;
+            const cropX = x * image.width / canvas.width;
+
+            const leftCanvas = document.createElement('canvas');
+            const rightCanvas = document.createElement('canvas');
+            leftCanvas.width = cropX;
+            leftCanvas.height = image.height;
+            rightCanvas.width = image.width - cropX;
+            rightCanvas.height = image.height;
+
+            const leftCtx = leftCanvas.getContext('2d');
+            const rightCtx = rightCanvas.getContext('2d');
+
+            leftCtx.drawImage(image, 0, 0, cropX, image.height, 0, 0, cropX, image.height);
+            rightCtx.drawImage(image, cropX, 0, image.width - cropX, image.height, 0, 0, image.width - cropX, image.height);
+
+            leftCanvas.toBlob((blob) => {
+                saveAs(blob, 'left_image.jpg');
+            }, 'image/jpeg', 0.95);
+
+            rightCanvas.toBlob((blob) => {
+                saveAs(blob, 'right_image.jpg');
+            }, 'image/jpeg', 0.95);
+        });
+
+        function saveAs(blob, fileName) {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
