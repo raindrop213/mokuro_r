@@ -50,7 +50,7 @@ def generate_legacy_html(volume: Volume, as_one_file=True, is_demo=False, ignore
         # shutil.copy(SCRIPT_PATH, out_dir / "script.js")
         # shutil.copy(STYLES_PATH, out_dir / "styles.css")
         # shutil.copy(PANZOOM_PATH, out_dir / "panzoom.min.js")
-        shutil.copy(ASSETS_PATH / "index.htmls", out_dir / 'index.html') # js和css所有漫画共用所以去掉，index则作为当前漫画的主页
+        shutil.copy(ASSETS_PATH / "index.html", out_dir / 'index.html') # js和css所有漫画共用所以去掉，index则作为当前漫画的主页
 
     img_paths = volume.get_img_paths()
 
