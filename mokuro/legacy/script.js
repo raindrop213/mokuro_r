@@ -9,7 +9,7 @@ let storageKey = "mokuro_" + window.location.pathname;
 let defaultState = {
     page_idx: 0,
     page2_idx: -1,
-    hasCover: false,
+    hasCover: true, //首页单封面
     r2l: true,
     singlePageView: false,
     ctrlToPan: false,
@@ -70,6 +70,11 @@ document.addEventListener('DOMContentLoaded', function () {
         enableTextSelection: true,
 
         beforeMouseDown: function (e) {
+            // 检查事件是否发生在<div id="analysisModal">内
+            if (e.target.closest('#analysisModal') !== null) {
+                // 在这个元素内部禁用panzoom的鼠标按下事件
+                return true;
+            }
             let shouldIgnore = disablePanzoomOnElement(e.target) ||
                 (e.target.closest('.textBox') !== null) ||
                 (state.ctrlToPan && !e.ctrlKey);
@@ -77,11 +82,20 @@ document.addEventListener('DOMContentLoaded', function () {
         },
 
         beforeWheel: function (e) {
+            if (e.target.closest('#analysisModal') !== null) {
+                // 在<div id="analysisModal">内部禁用滚轮事件
+                return true;
+            }
             let shouldIgnore = disablePanzoomOnElement(e.target);
             return shouldIgnore;
         },
 
         onTouch: function (e) {
+            if (e.target.closest('#analysisModal') !== null) {
+                // 在这个元素内部也禁用触摸事件
+                e.stopPropagation();
+                return false;
+            }
             if (disablePanzoomOnElement(e.target)) {
                 e.stopPropagation();
                 return false;
@@ -111,6 +125,41 @@ function disablePanzoomOnElement(element) {
     return document.getElementById('topMenu').contains(element);
 }
 
+
+// function fetchAndPlayAudio(text) {
+//     // 假设的函数，用于根据文本调用API获取音频并播放
+//     // 注意：实际实现时需要考虑跨域请求问题(CORS)和音频播放的具体实现方式
+//     const url = `http://192.168.1.3:23456/voice/vits?text=${encodeURIComponent(text)}&id=0&format=wav&lang=ja&max=200`;
+//     fetch(url)
+//         .then(response => response.blob())
+//         .then(blob => {
+//             const audioUrl = URL.createObjectURL(blob);
+//             const audio = new Audio(audioUrl);
+//             audio.play();
+//         })
+//         .catch(error => console.error('Error fetching or playing audio:', error));
+// }
+
+function copyToClipboard(text) {
+    // 创建一个隐藏的input元素
+    const input = document.createElement('input');
+    input.setAttribute('value', text);
+    document.body.appendChild(input);
+    input.select();
+    let success = false;
+
+    try {
+        // 尝试复制文本
+        success = document.execCommand('copy');
+    } catch (err) {
+        console.error('复制失败', err);
+    }
+
+    document.body.removeChild(input);
+    return success;
+}
+
+
 function initTextBoxes() {
 // Add event listeners for toggling ocr text boxes with the toggleOCRTextBoxes option.
     let textBoxes = document.querySelectorAll('.textBox');
@@ -125,6 +174,10 @@ function initTextBoxes() {
                     }
                 }
             }
+            let textWithoutNewLines = this.innerText;
+            // 这里调用修改后的复制函数和音频播放函数
+            copyToClipboard(textWithoutNewLines);
+            // fetchAndPlayAudio(textWithoutNewLines); // 添加的代码行，用于播放文本对应的音频
         });
     }
 // When clicking off of a .textBox, remove the hovered state.
@@ -304,12 +357,41 @@ document.getElementById('rightAScreen').addEventListener('click', inputRight, fa
 
 document.addEventListener("keydown", function onEvent(e) {
     switch (e.key) {
+        case "ArrowLeft":
+        case "a":
+            if (state.r2l) {
+                nextPage();
+            } else {
+                prevPage();
+            }
+            break;
+
+        case "ArrowRight":
+        case "d":
+            if (state.r2l) {
+                prevPage();
+            } else {
+                nextPage();
+            }
+            break;
+
+        case "ArrowUp":
         case "PageUp":
+        case "w":
             prevPage();
             break;
 
+        case "ArrowDown":
         case "PageDown":
+        case "s":
             nextPage();
+            break;
+
+        case "Enter":
+            toggleFullScreen();
+            setTimeout(function() {
+                zoomDefault();
+            }, 80);
             break;
 
         case "Home":
@@ -447,20 +529,26 @@ function zoomDefault() {
 function updatePage(new_page_idx) {
     new_page_idx = Math.min(Math.max(new_page_idx, 0), num_pages - 1);
 
+    // 隐藏当前页
     getPage(state.page_idx).style.display = "none";
 
     if (state.page2_idx >= 0) {
         getPage(state.page2_idx).style.display = "none";
     }
 
+    // 更新state.page_idx
     if (isPageFirstOfPair(new_page_idx)) {
         state.page_idx = new_page_idx;
     } else {
         state.page_idx = new_page_idx - 1;
     }
 
+    // 显示新的页面
     getPage(state.page_idx).style.display = "inline-block";
     getPage(state.page_idx).style.order = 2;
+
+    // 预加载后续4页
+    preloadNextPages(state.page_idx, 4);
 
     if (!state.singlePageView && state.page_idx < num_pages - 1 && !isPageFirstOfPair(state.page_idx + 1)) {
         state.page2_idx = state.page_idx + 1;
@@ -485,6 +573,18 @@ function updatePage(new_page_idx) {
     zoomDefault();
     if (state.eInkMode) {
         eInkRefresh();
+    }
+}
+
+// 图片预加载
+function preloadNextPages(currentPageIndex, numPages) {
+    for (let i = currentPageIndex + 1; i <= currentPageIndex + numPages && i < num_pages; i++) {
+        let pageContainer = getPage(i).querySelector('.pageContainer');
+        if (pageContainer) {
+            let bgImageUrl = pageContainer.style.backgroundImage.slice(5, -2); // 提取背景图像URL
+            let img = new Image(); // 创建一个新的Image对象
+            img.src = bgImageUrl; // 设置Image对象的源地址为背景图像地址
+        }
     }
 }
 

@@ -47,9 +47,10 @@ def generate_legacy_html(volume: Volume, as_one_file=True, is_demo=False, ignore
     out_dir = volume.path_title
 
     if not as_one_file:
-        shutil.copy(SCRIPT_PATH, out_dir / "script.js")
-        shutil.copy(STYLES_PATH, out_dir / "styles.css")
-        shutil.copy(PANZOOM_PATH, out_dir / "panzoom.min.js")
+        # shutil.copy(SCRIPT_PATH, out_dir / "script.js")
+        # shutil.copy(STYLES_PATH, out_dir / "styles.css")
+        # shutil.copy(PANZOOM_PATH, out_dir / "panzoom.min.js")
+        shutil.copy(ASSETS_PATH / "index.htmls", out_dir / 'index.html') # js和css所有漫画共用所以去掉，index则作为当前漫画的主页
 
     img_paths = volume.get_img_paths()
 
@@ -94,7 +95,7 @@ def get_index_html(page_htmls, html_title, as_one_file=True, is_demo=False):
                 with tag("style"):
                     doc.asis(STYLES_PATH.read_text())
             else:
-                with tag("link", rel="stylesheet", href="styles.css"):
+                with tag("link", rel="stylesheet", href="../styles.css"): # 读取上一层路径的styles.css
                     pass
 
         with tag("body"):
@@ -119,6 +120,7 @@ def get_index_html(page_htmls, html_title, as_one_file=True, is_demo=False):
                 for i, page_html in enumerate(page_htmls):
                     with tag("div", id=f"page{i}", klass="page"):
                         doc.asis(page_html)
+                    doc.text('\n') # html中每页都换行，方便对比查找哪一页有错误
 
                 with tag("a", id="leftAPage", href="#"):
                     pass
@@ -133,10 +135,10 @@ def get_index_html(page_htmls, html_title, as_one_file=True, is_demo=False):
                 with tag("script"):
                     doc.asis(SCRIPT_PATH.read_text())
             else:
-                with tag("script", src="panzoom.min.js"):
+                with tag("script", src="../panzoom.min.js"): # 读取上一层路径的panzoom.min.js
                     pass
 
-                with tag("script", src="script.js"):
+                with tag("script", src="../script.js"): # 读取上一层路径的script.js
                     pass
 
                 if is_demo:
