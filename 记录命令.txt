@@ -1,0 +1,108 @@
+--as_one_file - generate separate css and js files instead of embedding everything in html
+--disable_confirmation - run without asking for confirmation
+
+--pretrained_model_name_or_path: Name or path of the manga-ocr model.
+--force_cuda: Force the use of CPU even if CUDA is available.
+--disable_confirmation: Disable confirmation prompt. If False, the user will be prompted to confirm the list of volumes to be processed.
+--disable_ocr: Disable OCR processing. Generate mokuro/HTML files without OCR results.
+--ignore_errors: Continue processing volumes even if an error occurs.
+--no_cache: Do not use cached OCR results from previous runs (_ocr directories).
+--unzip: Extract volumes in zip/cbz format in their original location.
+--disable_html: Disable legacy HTML output. If True, acts as if --unzip is True.
+--as_one_file: Applies only to legacy HTML. If False, generate separate CSS and JS files instead of embedding them in the HTML file.
+--version: Print the version of mokuro and exit.
+
+批量
+mokuro --disable_confirmation --parent_dir "?" --as_one_file False
+单文件
+mokuro --disable_confirmation "?" --as_one_file False
+
+python rename-file.py
+python rename-pic.py
+python sep-select.py
+python sep-select2.py
+python rename-cover.py
+python white-pic.py
+
+py310-embed/python.exe
+py310-embed/python.exe -m pip install -e .
+
+.venv\Scripts\activate
+venvv\Scripts\activate
+venv\Scripts\activate
+
+py310-embed/python.exe mokuro --disable_confirmation --parent_dir "E:\qBit\Website\mokuro_r\test-manga\[西尾維新] 化物語/" --force_CUDA --as_one_file False
+py310-embed/python.exe mokuro --disable_confirmation --parent_dir "E:\qBit\Website\mokuro_r\test-manga\[須藤佑実] 夢の端々/" --force_cuda --as_one_file False
+
+mokuro --disable_confirmation --parent_dir "E:\OneDrive\Website\yuri-hime\title\[一迅社] コミック百合姫 2025年/" --as_one_file False
+mokuro --disable_confirmation "E:\OneDrive\Website\yuri-hime\title\[一迅社] コミック百合姫 2025年\[一迅社] コミック百合姫 2025年01月号" --as_one_file False
+
+
+mokuro --disable_confirmation --parent_dir "E:\Downloads\三浦" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\_梶尾~1" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)安倍吉俊]グリの街、灰羽の庭で - 安倍吉俊 灰羽連盟画集" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[押見修造] おかえりアリス" --as_one_file False
+
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[山西正則] ライコネンの熱帯魚" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[押見修造] ぼくは麻理のなか" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[あだち充] タッチ" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\_相田~1" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)TONY] トニーズアートワークス フロム シャイニングワールド 2" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)みつみ美里] Mitsumi Misato Art Works みつみ美里画集 Aquaplus Collection" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)るろお] 機巧少女は傷つかない るろお ART WORKS" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)鶴田謙二] ひたひた 鶴田謙二イラスト集" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[伊藤潤二] うずまき" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)CLAMP] カードキャプターさくら 連載開始20周年記念 イラスト集" --as_one_file False
+
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)いみぎむる] いみぎむる ART WORKS fruits" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)よろず] Timeless Red" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)カントク] NOTE 変態王子と笑わない猫。 カントクアートワークス" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)博] 博イラスト集～明日ちゃんまでの足跡～" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)堀部秀郎] 堀部秀郎 ART WORKS" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)杉菜水姫] 杉菜水姫(スギナミキ) 作品第二集 『花葬』" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\_(3FBA~1" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)海島千本] 千本の花束 海島千本作品集" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)深崎暮人] 冴えない彼女の育てかた 深崎暮人画集" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\_住野~1" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)荻pote] あいきょう 荻pote作品集" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(資料集)京都アニメーション] リズと青い鳥" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(図書)安田诚] 図説 女子高制服百科" --as_one_file False
+
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\H:\website\yuri-hime\title\[(画集)深崎暮人] 冴えない彼女の育てかた 深崎暮人画集" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[吉富昭仁] 熱帯少女" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)かんざきひろ] かんざきひろ画集 Cute" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[(画集)吉崎観音] Mine bluE 吉崎観音イラスト集 1994-2004" --as_one_file False
+mokuro --disable_confirmation --parent_dir "H:\website\yuri-hime\title\[東村アキコ] かくかくしかじか" --as_one_file False
+
+
+$> mokuro "my-manga-01" --mobile True --disable_confirmation True
+'// _ocr, my-manga-01.html, my-manga-01.mobile.html'
+
+$> mokuro "my-manga-01" --mobile True --disable_confirmation True --as_one_file False
+'// _ocr, my-manga-01.html, script.js, styles.css, panzoom.min.js'
+'// my-manga-01.mobile.html, script.mobile.js, styles.mobile.css'
+
+
+.venv/Scripts/activate 
+
+panzoom.min.js
+去掉了方向键，用来翻页
+if(e.keyCode===38){y=1}else if(e.keyCode===40){y=-1}else if(e.keyCode===37){x=1}else if(e.keyCode===39){x=-1}else if(e.keyCode===189||e.keyCode===109){z=1}
+↓
+if(e.keyCode===189||e.keyCode===109){z=1}
+
+
+overlay_generator.py
+加入了 doc.text('\n') 让每一页都换行
+                with tag('div', id='pagesContainer'):
+                    for i, page_html in enumerate(page_htmls):
+                        with tag('div', id=f'page{i}', klass='page'):
+                            doc.asis(page_html)
+                        doc.text('\n')
+                    with tag('a', id='leftAPage', href='#'):
+                        pass
+
+                    with tag('a', id='rightAPage', href='#'):
+                        pass
+
+
