@@ -1,8 +1,5 @@
---as_one_file - generate separate css and js files instead of embedding everything in html
---disable_confirmation - run without asking for confirmation
-
 --pretrained_model_name_or_path: Name or path of the manga-ocr model.
---force_cuda: Force the use of CPU even if CUDA is available.
+--force_cpu: Force the use of CPU even if CUDA is available.
 --disable_confirmation: Disable confirmation prompt. If False, the user will be prompted to confirm the list of volumes to be processed.
 --disable_ocr: Disable OCR processing. Generate mokuro/HTML files without OCR results.
 --ignore_errors: Continue processing volumes even if an error occurs.
@@ -31,11 +28,13 @@ py310-embed/python.exe -m pip install -e .
 venvv\Scripts\activate
 venv\Scripts\activate
 
-py310-embed/python.exe mokuro --disable_confirmation --parent_dir "E:\qBit\Website\mokuro_r\test-manga\[西尾維新] 化物語/" --force_CUDA --as_one_file False
-py310-embed/python.exe mokuro --disable_confirmation --parent_dir "E:\qBit\Website\mokuro_r\test-manga\[須藤佑実] 夢の端々/" --force_cuda --as_one_file False
+py310-embed/python.exe mokuro --disable_confirmation --as_one_file False "C:\Users\Raindrop\DOWNLO~1\415616\_富士~1\恋文と~1"
 
-mokuro --disable_confirmation --parent_dir "E:\OneDrive\Website\yuri-hime\title\[一迅社] コミック百合姫 2025年/" --as_one_file False
-mokuro --disable_confirmation "E:\OneDrive\Website\yuri-hime\title\[一迅社] コミック百合姫 2025年\[一迅社] コミック百合姫 2025年01月号" --as_one_file False
+py310-embed/python.exe mokuro --disable_confirmation --parent_dir "F:\OneDrive\Website\yuri-hime\title\[(画集)昆布わかめ] Soleil -ソレイユ 昆布わかめ画集-" --as_one_file False
+py310-embed/python.exe mokuro --disable_confirmation --parent_dir "G:\pypj2\mokuro_v022\title\[あさぎ龍] 15才/" --as_one_file False
+py310-embed/python.exe mokuro --disable_confirmation --parent_dir "F:\OneDrive\Website\yuri-hime\title\[安達哲] 幸せのひこうき雲/" --as_one_file False
+
+mokuro --disable_confirmation "E:\OneDrive\Website\yuri-hime\title\[一迅社] コミック百合姫 2024年\[一迅社] コミック百合姫 2025年01月号" --as_one_file False
 
 
 mokuro --disable_confirmation --parent_dir "E:\Downloads\三浦" --as_one_file False
